@@ -17,7 +17,7 @@ import { authActions } from '../../shared/store/auth-actions';
   imports: [Button, RouterLink, FormField, FormsModule, FormErrors],
   templateUrl: './login.html',
   host: {
-    class: 'min-h-screen flex items-center justify-center bg-slate-100 p-4',
+    class: 'min-h-screen flex items-center justify-center p-4',
   },
 })
 export class Login {

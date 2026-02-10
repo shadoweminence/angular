@@ -1,5 +1,5 @@
 <div class="w-full max-w-md">
-  <div class="bg-white p-8 rounded-xl shadow-md">
+  <div class="p-8 rounded-xl shadow-md">
     <h1 class="text-2xl font-bold mb-6 text-center">Register</h1>
     <form>
       <div class="mb-4">
@@ -44,14 +44,13 @@
         />
         <app-form-errors [control]="registerForm.confirmPassword()"></app-form-errors>
       </div>
-      <button
+      <app-button
         (click)="onSubmit($event)"
         [disabled]="!registerForm().valid()"
-        appButton
-        class="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600"
+        class="text-white px-6 py-2 rounded-md"
       >
         Register
-      </button>
+      </app-button>
       <p class="text-center text-sm text-gray-600 mt-4">
         Already have an account?
         <a routerLink="/login" class="text-blue-500 hover:underline">Login</a>
