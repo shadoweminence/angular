@@ -1,6 +1,13 @@
+// ============================================================================
+// AUTH REDUCER - State management for authentication
+// React equivalent: Redux Toolkit slice with reducers
+// ============================================================================
+
 import { createFeature, createReducer, on } from '@ngrx/store';
 import { authActions } from './auth-actions';
 
+// State type definition
+// React: Same, defined in TypeScript or JSDoc
 export type AuthState = {
   token: string | null;
   userId: number | null;
@@ -8,6 +15,8 @@ export type AuthState = {
   isLoading: boolean;
 };
 
+// Initial state
+// React: Same concept in createSlice
 export const initialAuthState: AuthState = {
   token: null,
   userId: null,
@@ -15,28 +24,49 @@ export const initialAuthState: AuthState = {
   isLoading: false,
 };
 
+// createFeature: Creates a feature state with reducer
+// React equivalent with Redux Toolkit:
+//   const authSlice = createSlice({
+//     name: 'auth',
+//     initialState,
+//     reducers: {},
+//     extraReducers: (builder) => {
+//       builder
+//         .addCase(login.pending, (state) => { state.isLoading = true })
+//         .addCase(login.fulfilled, (state, action) => { state.token = action.payload })
+//         .addCase(login.rejected, (state, action) => { state.error = action.error.message })
+//     }
+//   });
 export const authFeatures = createFeature({
   name: 'auth',
   reducer: createReducer(
     initialAuthState,
+
+    // Handle loginSuccess action
+    // React: .addCase(login.fulfilled, (state, action) => { ... })
     on(authActions.loginSuccess, (state, { token }) => ({
-      ...state,
+      ...state, // Spread operator for immutability
       token,
       isLoading: false,
     })),
 
+    // Handle loginFailure action
+    // React: .addCase(login.rejected, (state, action) => { ... })
     on(authActions.loginFailure, (state, { error }) => ({
       ...state,
       error,
       isLoading: false,
     })),
 
+    // Handle login action (start loading)
+    // React: .addCase(login.pending, (state) => { ... })
     on(authActions.login, (state) => ({
       ...state,
       isLoading: true,
       error: null,
     })),
 
+    // Register actions
     on(authActions.registerSuccess, (state) => ({
       ...state,
       isLoading: false,
