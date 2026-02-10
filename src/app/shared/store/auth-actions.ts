@@ -30,5 +30,8 @@ export const authActions = createActionGroup({
     register: props<RegisterRequest>(),
     registerSuccess: emptyProps(), // No payload needed
     registerFailure: props<{ error: string }>(),
+
+    restoreSession: props<{ token: string }>(),
+    logout: emptyProps(),
   },
 });

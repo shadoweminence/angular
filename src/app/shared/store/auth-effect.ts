@@ -9,7 +9,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { AuthApi } from '../services/auth-api';
 import { Router } from '@angular/router';
 import { authActions } from './auth-actions';
-import { catchError, map, of, switchMap } from 'rxjs';
+import { catchError, EMPTY, map, of, switchMap } from 'rxjs';
 import { NgToastService } from 'ng-angular-popup';
 import { Storage } from '../services/storage';
 
@@ -55,7 +55,7 @@ export const loginEffect = createEffect(
 
             router.navigateByUrl('/products');
             toast.success('Login successful', 'SUCCESS');
-            storage.set('auth_token', response.token);
+            storage.set('token', response.token);
 
             // Dispatch success action
             // React: Automatically dispatched by createAsyncThunk.fulfilled
@@ -107,6 +107,29 @@ export const registerEffect = createEffect(
         );
       }),
     );
+  },
+  {
+    functional: true,
+  },
+);
+
+// Restore session effect - is used to check if the user is logged in or not
+// React equivalent:
+//   export const restoreSession = createAsyncThunk('auth/restoreSession', async () => {
+//     const token = localStorage.getItem('auth_token');
+//     if (!token) {
+//       return null;
+//     }
+//     return token;
+//   });
+
+export const restoreSessionEffect = createEffect(
+  () => {
+    const token = localStorage.getItem('auth_token');
+    if (!token) {
+      return EMPTY;
+    }
+    return of(authActions.restoreSession({ token }));
   },
   {
     functional: true,

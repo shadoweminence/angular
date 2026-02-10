@@ -4,6 +4,8 @@
 // ============================================================================
 
 import { Routes } from '@angular/router';
+import { guestGuard } from './shared/guards/guestGuard';
+import { authGuard } from './shared/guards/authGuard';
 
 // Routes array: Configuration-based routing (declarative)
 // React equivalent: Component-based routing with JSX
@@ -14,12 +16,14 @@ export const routes: Routes = [
     path: 'login',
     // loadComponent: Code splitting / lazy loading
     // React equivalent: const Login = lazy(() => import('./pages/Login'))
+    canActivate: [guestGuard],
     loadComponent: () => import('./pages/login/login').then((m) => m.Login),
   },
   {
     path: 'register',
     // Dynamic import for bundle optimization
     // React: Wrap with <Suspense fallback={<Loading />}>
+    canActivate: [guestGuard],
     loadComponent: () => import('./pages/register/register').then((m) => m.Register),
   },
 
@@ -28,7 +32,7 @@ export const routes: Routes = [
   {
     path: '',
     loadComponent: () => import('./pages/main-layout').then((m) => m.MainLayout),
-    canActivate: [], // Route guards (auth protection)
+    canActivate: [authGuard], // Route guards (auth protection)
     // React equivalent: Protected Route wrapper or check in component with useEffect
     children: [
       // Child routes render inside parent's <router-outlet>

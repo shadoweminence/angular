@@ -13,7 +13,7 @@ import { routes } from './app.routes';
 import { provideStore } from '@ngrx/store'; // React: <Provider store={store}>
 import { provideEffects } from '@ngrx/effects'; // React: Redux middleware (thunk/saga)
 import { provideHttpClient } from '@angular/common/http'; // React: axios/fetch (no provider needed)
-import { loginEffect, registerEffect } from './shared/store/auth-effect';
+import { loginEffect, registerEffect, restoreSessionEffect } from './shared/store/auth-effect';
 import { authFeatures } from './shared/store/auth-features';
 import { environment } from '../environments/environment';
 import { provideNgToast } from 'ng-angular-popup';
@@ -48,7 +48,7 @@ export const appConfig: ApplicationConfig = {
     // Side effects middleware for async operations (like API calls)
     // React equivalent: Redux Thunk (built-in) or Redux Saga middleware
     // In React: middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(thunk)
-    provideEffects({ loginEffect, registerEffect }),
+    provideEffects({ loginEffect, registerEffect, restoreSessionEffect }),
 
     // Dependency Injection: Provide API_URL token with actual value
     // React equivalent: const API_URL = process.env.REACT_APP_API_URL
