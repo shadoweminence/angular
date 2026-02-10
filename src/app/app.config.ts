@@ -16,6 +16,7 @@ import { provideHttpClient } from '@angular/common/http'; // React: axios/fetch 
 import { loginEffect, registerEffect } from './shared/store/auth-effect';
 import { authFeatures } from './shared/store/auth-features';
 import { environment } from '../environments/environment';
+import { provideNgToast } from 'ng-angular-popup';
 
 // InjectionToken: Angular's way to provide values through Dependency Injection
 // React equivalent: process.env.REACT_APP_API_URL or Context
@@ -54,5 +55,9 @@ export const appConfig: ApplicationConfig = {
       provide: API_URL,
       useValue: environment.apiUrl,
     },
+    provideNgToast({
+      duration: 3000,
+      position: 'toaster-top-right',
+    }),
   ],
 };

@@ -10,6 +10,7 @@ import { AuthApi } from '../services/auth-api';
 import { Router } from '@angular/router';
 import { authActions } from './auth-actions';
 import { catchError, map, of, switchMap } from 'rxjs';
+import { NgToastService } from 'ng-angular-popup';
 import { Storage } from '../services/storage';
 
 // createEffect: Listens to actions and performs side effects
@@ -34,6 +35,7 @@ export const loginEffect = createEffect(
     authApi = inject(AuthApi),
     router = inject(Router),
     storage = inject(Storage),
+    toast = inject(NgToastService),
   ) => {
     return actions$.pipe(
       // Listen for login action
@@ -52,6 +54,7 @@ export const loginEffect = createEffect(
             // React: Usually done in component with useEffect watching token
 
             router.navigateByUrl('/products');
+            toast.success('Login successful', 'SUCCESS');
             storage.set('auth_token', response.token);
 
             // Dispatch success action
@@ -62,6 +65,7 @@ export const loginEffect = createEffect(
           // On error
           // React: createAsyncThunk.rejected
           catchError((error) => {
+            toast.danger(error.message, 'ERROR');
             return of(authActions.loginFailure({ error: error.message }));
           }),
         );
@@ -80,7 +84,12 @@ export const loginEffect = createEffect(
 //     // Navigation in component: useEffect(() => { if (success) navigate('/login') }, [success])
 //   });
 export const registerEffect = createEffect(
-  (actions$ = inject(Actions), authApi = inject(AuthApi), router = inject(Router)) => {
+  (
+    actions$ = inject(Actions),
+    authApi = inject(AuthApi),
+    router = inject(Router),
+    toast = inject(NgToastService),
+  ) => {
     return actions$.pipe(
       ofType(authActions.register),
       switchMap((registerRequest) => {
@@ -88,9 +97,11 @@ export const registerEffect = createEffect(
           map(() => {
             // Navigate to login after successful registration
             router.navigateByUrl('/login');
+            toast.success('Login successful', 'SUCCESS');
             return authActions.registerSuccess();
           }),
           catchError((error) => {
+            toast.danger(error.message, 'ERROR');
             return of(authActions.registerFailure({ error: error.message }));
           }),
         );
