@@ -10,6 +10,7 @@ import { AuthApi } from '../services/auth-api';
 import { Router } from '@angular/router';
 import { authActions } from './auth-actions';
 import { catchError, map, of, switchMap } from 'rxjs';
+import { Storage } from '../services/storage';
 
 // createEffect: Listens to actions and performs side effects
 // React equivalent with Redux Toolkit:
@@ -28,7 +29,12 @@ import { catchError, map, of, switchMap } from 'rxjs';
 //     }
 //   }
 export const loginEffect = createEffect(
-  (actions$ = inject(Actions), authApi = inject(AuthApi), router = inject(Router)) => {
+  (
+    actions$ = inject(Actions),
+    authApi = inject(AuthApi),
+    router = inject(Router),
+    storage = inject(Storage),
+  ) => {
     return actions$.pipe(
       // Listen for login action
       // React: This happens automatically in createAsyncThunk
@@ -44,7 +50,9 @@ export const loginEffect = createEffect(
           map((response) => {
             // Navigate to products page
             // React: Usually done in component with useEffect watching token
+
             router.navigateByUrl('/products');
+            storage.set('auth_token', response.token);
 
             // Dispatch success action
             // React: Automatically dispatched by createAsyncThunk.fulfilled

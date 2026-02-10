@@ -15,57 +15,7 @@ import { authActions } from '../../shared/store/auth-actions';
 @Component({
   selector: 'app-login',
   imports: [Button, RouterLink, FormField, FormsModule, FormErrors],
-  template: `
-    <div class="w-full max-w-md">
-      <div class="bg-white p-8 rounded-xl shadow-md">
-        <h1 class="text-2xl font-bold mb-6 text-center">Login</h1>
-        <!-- (ngSubmit): Event binding, React: onSubmit={handleSubmit} -->
-        <form (ngSubmit)="onSubmit($event)">
-          <div class="mb-4">
-            <label for="username" class="block text-sm font-medium text-gray-700 mb-2"
-              >username</label
-            >
-            <!-- [formField]: Property binding, React: {...register('username')} -->
-            <input
-              type="username"
-              id="username"
-              [formField]="loginForm.username"
-              class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-            <!-- Component with input binding, React: <FormErrors control={loginForm.username} /> -->
-            <app-form-errors [control]="loginForm.username()"></app-form-errors>
-          </div>
-          <div class="mb-4">
-            <label for="password" class="block text-sm font-medium text-gray-700 mb-2"
-              >Password</label
-            >
-            <input
-              type="password"
-              id="password"
-              [formField]="loginForm.password"
-              class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-            <app-form-errors [control]="loginForm.password()"></app-form-errors>
-          </div>
-          <!-- appButton: Directive, React: custom component or className -->
-          <!-- [disabled]: Property binding, React: disabled={!isValid} -->
-          <button
-            appButton
-            [disabled]="!loginForm().valid()"
-            type="submit"
-            class="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600"
-          >
-            Login
-          </button>
-          <p class="text-center text-sm text-gray-600 mt-4">
-            Don't have an account?
-            <!-- routerLink: Navigation, React: <Link to="/register"> -->
-            <a routerLink="/register" class="text-blue-500 hover:underline">Register</a>
-          </p>
-        </form>
-      </div>
-    </div>
-  `,
+  templateUrl: './login.html',
   host: {
     class: 'min-h-screen flex items-center justify-center bg-slate-100 p-4',
   },
