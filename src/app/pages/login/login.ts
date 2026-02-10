@@ -1,9 +1,11 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { Button } from '../../shared/components/button';
 import { RouterLink } from '@angular/router';
 import { form, FormField, minLength, required } from '@angular/forms/signals';
 import { FormsModule } from '@angular/forms';
 import { FormErrors } from '../../shared/components/form-errors';
+import { Store } from '@ngrx/store';
+import { authActions } from '../../shared/store/auth-actions';
 
 @Component({
   selector: 'app-login',
@@ -58,6 +60,8 @@ import { FormErrors } from '../../shared/components/form-errors';
   },
 })
 export class Login {
+  private store = inject(Store);
+
   loginModel = signal({
     username: '',
     password: '',
@@ -72,9 +76,7 @@ export class Login {
   onSubmit(event: Event) {
     event.preventDefault();
     if (this.loginForm().valid()) {
-      console.log('Login Data: ', this.loginForm().value());
-    } else {
-      console.log('Form is invalid');
+      this.store.dispatch(authActions.login(this.loginForm().value()));
     }
   }
 }

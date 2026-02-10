@@ -27,4 +27,24 @@ export const loginEffect = createEffect(
   },
 );
 
-// export const loginEffect = createEffect();
+export const registerEffect = createEffect(
+  (actions$ = inject(Actions), authApi = inject(AuthApi), router = inject(Router)) => {
+    return actions$.pipe(
+      ofType(authActions.register),
+      switchMap((registerRequest) => {
+        return authApi.register(registerRequest).pipe(
+          map(() => {
+            router.navigateByUrl('/login');
+            return authActions.registerSuccess();
+          }),
+          catchError((error) => {
+            return of(authActions.registerFailure({ error: error.message }));
+          }),
+        );
+      }),
+    );
+  },
+  {
+    functional: true,
+  },
+);

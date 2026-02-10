@@ -1,9 +1,11 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { Button } from '../../shared/components/button';
 import { RouterLink } from '@angular/router';
 import { form, FormField, minLength, required, validate } from '@angular/forms/signals';
 import { FormErrors } from '../../shared/components/form-errors';
 import { registerSchema } from './register-schema';
+import { Store } from '@ngrx/store';
+import { authActions } from '../../shared/store/auth-actions';
 
 @Component({
   selector: 'app-register',
@@ -79,6 +81,8 @@ import { registerSchema } from './register-schema';
   },
 })
 export class Register {
+  private store = inject(Store);
+
   registerModel = signal({
     username: '',
     email: '',
@@ -90,9 +94,7 @@ export class Register {
   onSubmit(event: Event) {
     event.preventDefault();
     if (this.registerForm().valid()) {
-      console.log('Login Data: ', this.registerForm().value());
-    } else {
-      console.log('Form is invalid');
+      this.store.dispatch(authActions.register(this.registerForm().value()));
     }
   }
 }
