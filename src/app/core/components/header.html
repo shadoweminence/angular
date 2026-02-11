@@ -3,12 +3,13 @@
     <ng-template #start>
       <div class="flex items-center gap-2 md:gap-4 flex-wrap">
         <svg
+          [routerLink]="['/products']"
           width="31"
           height="33"
           viewBox="0 0 31 33"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
-          class="block flex-shrink-0"
+          class="block shrink-0 cursor-pointer"
         >
           <path
             d="M15.1934 0V0V0L0.0391235 5.38288L2.35052 25.3417L15.1934 32.427V32.427V32.427L28.0364 25.3417L30.3478 5.38288L15.1934 0Z"
@@ -83,7 +84,7 @@
         </svg>
         <div
           (click)="productsMenu.toggle($event); isMenuOpen = !isMenuOpen"
-          class="flex items-center gap-1 cursor-pointer flex-shrink-0"
+          class="flex items-center gap-1 cursor-pointer shrink-0"
         >
           <span class="hidden sm:inline">Products</span>
           <span class="sm:hidden">Products</span>
@@ -101,7 +102,7 @@
           styleClass="mt-4"
           (onHide)="isMenuOpen = false"
         />
-        
+
         <div class="flex items-center gap-2 md:gap-3 ml-2 md:ml-4">
           <i
             class="pi pi-mars cursor-pointer transition-colors text-lg md:text-xl"
@@ -137,7 +138,11 @@
 
     <ng-template #end>
       <div class="flex cursor-pointer items-center gap-2">
-        <input type="text" placeholder="Search" class="hidden sm:block w-32 md:w-40 px-3 py-2 border rounded" />
+        <input
+          type="text"
+          placeholder="Search"
+          class="hidden sm:block w-32 md:w-40 px-3 py-2 border rounded"
+        />
         <p-avatar
           image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png"
           shape="circle"

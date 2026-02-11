@@ -13,10 +13,11 @@ import { Store } from '@ngrx/store';
 import { authActions } from '@store/auth/auth-actions';
 import { productActions } from '@store/product/productActions';
 import { PRODUCTS_MENU_ITEMS, USER_MENU_ITEMS } from '../constants/menu.constants';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-header',
-  imports: [AvatarModule, BadgeModule, MenubarModule, MenuModule],
+  imports: [AvatarModule, BadgeModule, MenubarModule, MenuModule, RouterLink],
   templateUrl: './header.html',
 })
 export class Header implements OnInit {
