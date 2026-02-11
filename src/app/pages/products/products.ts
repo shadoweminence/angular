@@ -5,28 +5,17 @@
 
 import { inject, OnInit, computed } from '@angular/core';
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { DataViewModule, DataView } from 'primeng/dataview';
-import { SelectButtonModule } from 'primeng/selectbutton';
+import { DataViewModule } from 'primeng/dataview';
 import { SkeletonModule } from 'primeng/skeleton';
-import { Store } from '@ngrx/store';
-import { productActions } from '@app/shared/store/product/productActions';
-import { productFeatures, selectProducts } from '@app/shared/store/product/productFeatures';
-
 import { ButtonModule } from 'primeng/button';
 import { RouterLink } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { productActions } from '@store/product/productActions';
+import { productFeatures, selectProducts } from '@store/product/productFeatures';
 
 @Component({
   selector: 'app-products',
-  imports: [
-    DataViewModule,
-    SelectButtonModule,
-    SkeletonModule,
-    FormsModule,
-    DataView,
-    ButtonModule,
-    RouterLink,
-  ],
+  imports: [DataViewModule, SkeletonModule, ButtonModule, RouterLink],
   templateUrl: './products.html',
 })
 export class Products implements OnInit {

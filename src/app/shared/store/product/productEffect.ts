@@ -50,8 +50,8 @@ export const productByIdEffect = createEffect(
   (actions$ = inject(Actions), productApi = inject(ProductApi)) => {
     return actions$.pipe(
       ofType(productActions.getProductById),
-      switchMap((id) => {
-        return productApi.getProductById(Number(id)).pipe(
+      switchMap(({ id }) => {
+        return productApi.getProductById(id).pipe(
           map((product) => {
             return productActions.getProductByIdSuccess({ product });
           }),

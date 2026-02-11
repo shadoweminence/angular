@@ -19,6 +19,10 @@ export type ProductResponse = {
   description: string;
   category: string;
   image: string;
+  rating?: {
+    rate: number;
+    count: number;
+  };
 };
 
 // @Injectable: Makes this class available for dependency injection

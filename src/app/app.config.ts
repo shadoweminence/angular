@@ -22,7 +22,7 @@ import { providePrimeNG } from 'primeng/config';
 import Aura from '@primeuix/themes/aura';
 import { API_URL } from '@app/shared/tokens/api-token';
 import { productFeatures } from '@store/product/productFeatures';
-import { productEffect } from '@store/product/productEffect';
+import { productEffect, productByIdEffect } from '@store/product/productEffect';
 
 // ApplicationConfig: Central configuration for the entire Angular app
 // React equivalent: Wrapping App component with providers in index.js/App.js
@@ -57,6 +57,7 @@ export const appConfig: ApplicationConfig = {
       restoreSessionEffect,
       logoutEffect,
       productEffect,
+      productByIdEffect,
     }),
 
     // ========================================================================

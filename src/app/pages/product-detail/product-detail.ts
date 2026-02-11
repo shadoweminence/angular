@@ -1,41 +1,49 @@
-import { inject, OnInit, signal } from '@angular/core';
-import { CommonModule, NgClass, NgFor } from '@angular/common';
-import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { DataViewModule, DataView } from 'primeng/dataview';
-import { SelectButtonModule } from 'primeng/selectbutton';
-import { SkeletonModule } from 'primeng/skeleton';
-import { SelectItem } from 'primeng/api';
-import { Store } from '@ngrx/store';
-import { productActions } from '@app/shared/store/product/productActions';
-import { productFeatures, selectProducts } from '@app/shared/store/product/productFeatures';
+// ============================================================================
+// PRODUCT DETAIL COMPONENT - Display single product details
+// React equivalent: Functional component with useParams hook
+// ============================================================================
 
+import { inject, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { ActivatedRoute, RouterLink } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { selectProducts, productFeatures } from '@store/product/productFeatures';
+import { productActions } from '@store/product/productActions';
 import { ButtonModule } from 'primeng/button';
-import { ActivatedRoute } from '@angular/router';
+import { SkeletonModule } from 'primeng/skeleton';
 
 @Component({
   selector: 'app-product-detail',
-  standalone: true,
-  imports: [
-    DataViewModule,
-    CommonModule,
-    SelectButtonModule,
-    SkeletonModule,
-    FormsModule,
-    ButtonModule,
-  ],
-  template: '<h1>Product Detail</h1>',
+  imports: [ButtonModule, RouterLink, SkeletonModule],
+  templateUrl: './product-detail.html',
 })
 export class ProductDetail implements OnInit {
-  private store = inject(Store);
-  private route = inject(ActivatedRoute);
+  private readonly store = inject(Store);
+  private readonly route = inject(ActivatedRoute);
+
+  // Get all products from store
+  private allProducts = this.store.selectSignal(selectProducts);
+
+  // Get single product from store
+  private singleProduct = this.store.selectSignal(productFeatures.selectProduct);
+
+  // Loading state
   isLoading = this.store.selectSignal(productFeatures.selectIsLoading);
 
-  ngOnInit(): void {
+  // Find product by ID from route params or use single product from store
+  product = () => {
     const id = Number(this.route.snapshot.paramMap.get('id'));
-    this.store.dispatch(productActions.getProductById({ id }));
-  }
-  counterArray(n: number): number[] {
-    return Array(n);
+    // First try to find in products list, otherwise use single product
+    return this.allProducts()?.find((p) => p.id === id) || this.singleProduct();
+  };
+
+  ngOnInit(): void {
+    if (!this.allProducts()) {
+      const idParam = this.route.snapshot.paramMap.get('id');
+      if (idParam) {
+        const id = Number(idParam);
+        this.store.dispatch(productActions.getProductById({ id }));
+      }
+    }
   }
 }
