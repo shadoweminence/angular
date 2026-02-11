@@ -3,11 +3,7 @@
 // React equivalent: App.jsx with Provider wrappers and store configuration
 // ============================================================================
 
-import {
-  ApplicationConfig,
-  InjectionToken, // React equivalent: Context API or environment variables
-  provideBrowserGlobalErrorListeners,
-} from '@angular/core';
+import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { provideRouter } from '@angular/router'; // React: <BrowserRouter>
 import { routes } from './app.routes';
 import { provideStore } from '@ngrx/store'; // React: <Provider store={store}>
@@ -27,9 +23,7 @@ import Aura from '@primeuix/themes/aura';
 import { productFeatures } from './shared/store/productFeatures';
 import { productEffect } from './shared/store/productEffect';
 
-// InjectionToken: Angular's way to provide values through Dependency Injection
-// React equivalent: process.env.REACT_APP_API_URL or Context
-export const API_URL = new InjectionToken<string>('API_URL');
+import { API_URL } from './shared/tokens/api-token';
 
 // ApplicationConfig: Central configuration for the entire Angular app
 // React equivalent: Wrapping App component with providers in index.js/App.js
