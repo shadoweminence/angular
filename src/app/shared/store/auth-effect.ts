@@ -9,7 +9,9 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { AuthApi } from '../services/auth-api';
 import { Router } from '@angular/router';
 import { authActions } from './auth-actions';
-import { catchError, map, of, switchMap } from 'rxjs';
+import { catchError, EMPTY, map, of, switchMap } from 'rxjs';
+import { NgToastService } from 'ng-angular-popup';
+import { Storage } from '../services/storage';
 
 // createEffect: Listens to actions and performs side effects
 // React equivalent with Redux Toolkit:
@@ -28,7 +30,13 @@ import { catchError, map, of, switchMap } from 'rxjs';
 //     }
 //   }
 export const loginEffect = createEffect(
-  (actions$ = inject(Actions), authApi = inject(AuthApi), router = inject(Router)) => {
+  (
+    actions$ = inject(Actions),
+    authApi = inject(AuthApi),
+    router = inject(Router),
+    storage = inject(Storage),
+    toast = inject(NgToastService),
+  ) => {
     return actions$.pipe(
       // Listen for login action
       // React: This happens automatically in createAsyncThunk
@@ -44,7 +52,10 @@ export const loginEffect = createEffect(
           map((response) => {
             // Navigate to products page
             // React: Usually done in component with useEffect watching token
+
             router.navigateByUrl('/products');
+            toast.success('Login successful', 'SUCCESS');
+            storage.set('token', response.token);
 
             // Dispatch success action
             // React: Automatically dispatched by createAsyncThunk.fulfilled
@@ -54,6 +65,7 @@ export const loginEffect = createEffect(
           // On error
           // React: createAsyncThunk.rejected
           catchError((error) => {
+            toast.danger(error.message, 'ERROR');
             return of(authActions.loginFailure({ error: error.message }));
           }),
         );
@@ -72,7 +84,12 @@ export const loginEffect = createEffect(
 //     // Navigation in component: useEffect(() => { if (success) navigate('/login') }, [success])
 //   });
 export const registerEffect = createEffect(
-  (actions$ = inject(Actions), authApi = inject(AuthApi), router = inject(Router)) => {
+  (
+    actions$ = inject(Actions),
+    authApi = inject(AuthApi),
+    router = inject(Router),
+    toast = inject(NgToastService),
+  ) => {
     return actions$.pipe(
       ofType(authActions.register),
       switchMap((registerRequest) => {
@@ -80,14 +97,39 @@ export const registerEffect = createEffect(
           map(() => {
             // Navigate to login after successful registration
             router.navigateByUrl('/login');
+            toast.success('Login successful', 'SUCCESS');
             return authActions.registerSuccess();
           }),
           catchError((error) => {
+            toast.danger(error.message, 'ERROR');
             return of(authActions.registerFailure({ error: error.message }));
           }),
         );
       }),
     );
+  },
+  {
+    functional: true,
+  },
+);
+
+// Restore session effect - is used to check if the user is logged in or not
+// React equivalent:
+//   export const restoreSession = createAsyncThunk('auth/restoreSession', async () => {
+//     const token = localStorage.getItem('auth_token');
+//     if (!token) {
+//       return null;
+//     }
+//     return token;
+//   });
+
+export const restoreSessionEffect = createEffect(
+  () => {
+    const token = localStorage.getItem('auth_token');
+    if (!token) {
+      return EMPTY;
+    }
+    return of(authActions.restoreSession({ token }));
   },
   {
     functional: true,
