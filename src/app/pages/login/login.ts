@@ -4,13 +4,13 @@
 // ============================================================================
 
 import { Component, inject, signal } from '@angular/core';
-import { Button } from '../../shared/components/button';
+import { Button } from '@components/button';
 import { RouterLink } from '@angular/router'; // React: import { Link } from 'react-router-dom'
 import { form, FormField, minLength, required } from '@angular/forms/signals';
 import { FormsModule } from '@angular/forms';
-import { FormErrors } from '../../shared/components/form-errors';
+import { FormErrors } from '@components/form-errors';
 import { Store } from '@ngrx/store'; // React: import { useDispatch } from 'react-redux'
-import { authActions } from '../../shared/store/auth-actions';
+import { authActions } from '@store/auth-actions';
 
 @Component({
   selector: 'app-login',

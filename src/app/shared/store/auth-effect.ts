@@ -8,10 +8,10 @@ import { inject } from '@angular/core';
 import { Actions, createEffect, ofType, ROOT_EFFECTS_INIT } from '@ngrx/effects';
 import { AuthApi } from '../services/auth-api';
 import { Router } from '@angular/router';
-import { authActions } from './auth-actions';
+import { authActions } from '@store/auth-actions';
 import { catchError, EMPTY, map, of, switchMap } from 'rxjs';
 import { NgToastService } from 'ng-angular-popup';
-import { Storage } from '../services/storage';
+import { Storage } from '@services/storage';
 
 // createEffect: Listens to actions and performs side effects
 // React equivalent with Redux Toolkit:
@@ -133,6 +133,29 @@ export const restoreSessionEffect = createEffect(
           return authActions.logout();
         }
         return authActions.restoreSession({ token });
+      }),
+    );
+  },
+  {
+    functional: true,
+  },
+);
+
+// Logout effect - handles user logout and navigation
+// React equivalent:
+//   const handleLogout = () => {
+//     localStorage.removeItem('auth_token');
+//     navigate('/login');
+//     dispatch(logout());
+//   };
+export const logoutEffect = createEffect(
+  (actions$ = inject(Actions), router = inject(Router), storage = inject(Storage)) => {
+    return actions$.pipe(
+      ofType(authActions.logout),
+      map(() => {
+        storage.remove('token');
+        router.navigateByUrl('/login');
+        return { type: 'NO_ACTION' };
       }),
     );
   },

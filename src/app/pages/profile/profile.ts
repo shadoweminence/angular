@@ -2,6 +2,6 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-profile',
-  template: `<h1>Profile Page</h1>`,
+  templateUrl: './profile.html',
 })
 export class Profile {}

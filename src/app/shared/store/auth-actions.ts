@@ -4,7 +4,7 @@
 // ============================================================================
 
 import { createActionGroup, emptyProps, props } from '@ngrx/store';
-import { RegisterRequest } from '../services/auth-api';
+import { RegisterRequest } from '@services/auth-api';
 
 // createActionGroup: Creates a group of related actions
 // React equivalent: In Redux Toolkit, actions are auto-generated in createSlice

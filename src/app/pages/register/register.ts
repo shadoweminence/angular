@@ -4,13 +4,13 @@
 // ============================================================================
 
 import { Component, inject, signal } from '@angular/core';
-import { Button } from '../../shared/components/button';
+import { Button } from '@components/button';
 import { RouterLink } from '@angular/router';
 import { form, FormField, minLength, required, validate } from '@angular/forms/signals';
-import { FormErrors } from '../../shared/components/form-errors';
+import { FormErrors } from '@components/form-errors';
 import { registerSchema } from './register-schema';
 import { Store } from '@ngrx/store'; // React: useDispatch hook
-import { authActions } from '../../shared/store/auth-actions';
+import { authActions } from '@store/auth-actions';
 
 @Component({
   selector: 'app-register',

@@ -1,0 +1,5 @@
+@if (shouldShowError()) {
+  @for (error of control().errors(); track error.kind) {
+    <small class="text-red-500 text-sm mt-1">{{ error.message }}</small>
+  }
+}

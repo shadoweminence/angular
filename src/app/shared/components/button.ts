@@ -5,20 +5,7 @@ import { ButtonModule } from 'primeng/button';
   selector: 'app-button',
   standalone: true,
   imports: [ButtonModule],
-  template: `
-    <button
-      pButton
-      [label]="label()"
-      [icon]="icon()"
-      [severity]="mappedSeverity()"
-      [disabled]="disabled()"
-      [loading]="loading()"
-      (click)="onClick($event)"
-      class="cursor-pointer items-center justify-center"
-    >
-      <ng-content />
-    </button>
-  `,
+  templateUrl: './button.html',
 })
 export class Button {
   label = input<string>('');

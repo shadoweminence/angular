@@ -1,0 +1,12 @@
+<button
+  pButton
+  [label]="label()"
+  [icon]="icon()"
+  [severity]="mappedSeverity()"
+  [disabled]="disabled()"
+  [loading]="loading()"
+  (click)="onClick($event)"
+  class="cursor-pointer items-center justify-center"
+>
+  <ng-content />
+</button>

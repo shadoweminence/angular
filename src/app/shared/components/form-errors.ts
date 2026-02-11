@@ -3,13 +3,7 @@ import { FieldState } from '@angular/forms/signals';
 
 @Component({
   selector: 'app-form-errors',
-  template: `
-    @if (shouldShowError()) {
-      @for (error of control().errors(); track error.kind) {
-        <small class="text-red-500 text-sm mt-1">{{ error.message }}</small>
-      }
-    }
-  `,
+  templateUrl: './form-errors.html',
 })
 export class FormErrors {
   readonly control = input.required<FieldState<unknown>>();

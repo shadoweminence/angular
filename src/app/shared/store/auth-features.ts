@@ -4,7 +4,7 @@
 // ============================================================================
 
 import { createFeature, createReducer, on } from '@ngrx/store';
-import { authActions } from './auth-actions';
+import { authActions } from '@store/auth-actions';
 
 // State type definition
 // React: Same, defined in TypeScript or JSDoc
