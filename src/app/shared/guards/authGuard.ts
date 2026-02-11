@@ -1,11 +1,20 @@
+// ============================================================================
+// AUTH GUARD - Route protection for authenticated users
+// React equivalent: Protected Route component or route middleware
+// ============================================================================
+
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { map } from 'rxjs';
 import { selectIsLoggedIn } from '../store/auth-selectors';
 
-// is used to make some routes only accessible after the user is logged in
-
+// Guard to make routes only accessible after the user is logged in
+// React equivalent:
+//   const ProtectedRoute = ({ children }) => {
+//     const isLoggedIn = useSelector(selectIsLoggedIn);
+//     return isLoggedIn ? children : <Navigate to="/login" />;
+//   };
 export const authGuard: CanActivateFn = () => {
   const store = inject(Store);
   const router = inject(Router);
@@ -13,9 +22,9 @@ export const authGuard: CanActivateFn = () => {
   return store.select(selectIsLoggedIn).pipe(
     map((isLoggedIn) => {
       if (isLoggedIn) {
-        return true;
+        return true; // Allow access
       }
-      return router.parseUrl('/login');
+      return router.parseUrl('/login'); // Redirect to login
     }),
   );
 };

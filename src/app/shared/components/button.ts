@@ -3,7 +3,6 @@ import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-button',
-  standalone: true,
   imports: [ButtonModule],
   templateUrl: './button.html',
 })
@@ -25,7 +24,5 @@ export class Button {
     return map[this.variant()];
   });
 
-  onClick(event: Event) {
-    // bubble normallyso
-  }
+  onClick(event: Event) {}
 }

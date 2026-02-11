@@ -100,12 +100,43 @@
           styleClass="mt-4"
           (onHide)="isMenuOpen = false"
         />
+        
+        <div class="flex items-center gap-3 ml-4">
+          <i
+            class="pi pi-mars cursor-pointer transition-colors text-xl"
+            [class.text-blue-500]="selectedCategory === 'male'"
+            [class.text-gray-400]="selectedCategory !== 'male'"
+            (click)="onCategorySelect('male')"
+            title="Men's Products"
+          ></i>
+          <i
+            class="pi pi-venus cursor-pointer transition-colors text-xl"
+            [class.text-pink-500]="selectedCategory === 'female'"
+            [class.text-gray-400]="selectedCategory !== 'female'"
+            (click)="onCategorySelect('female')"
+            title="Women's Products"
+          ></i>
+          <i
+            class="pi pi-sparkles cursor-pointer transition-colors text-xl"
+            [class.text-yellow-500]="selectedCategory === 'jewelery'"
+            [class.text-gray-400]="selectedCategory !== 'jewelery'"
+            (click)="onCategorySelect('jewelery')"
+            title="Jewelery"
+          ></i>
+          <i
+            class="pi pi-desktop cursor-pointer transition-colors text-xl"
+            [class.text-purple-500]="selectedCategory === 'electronics'"
+            [class.text-gray-400]="selectedCategory !== 'electronics'"
+            (click)="onCategorySelect('electronics')"
+            title="Electronics"
+          ></i>
+        </div>
       </div>
     </ng-template>
 
     <ng-template #end>
       <div class="flex cursor-pointer items-center gap-2">
-        <input type="text" pInputText placeholder="Search" class="w-40" />
+        <input type="text" placeholder="Search" class="w-40 px-3 py-2 border rounded" />
         <p-avatar
           image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png"
           shape="circle"

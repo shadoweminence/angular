@@ -1,3 +1,8 @@
+// ============================================================================
+// LOGIN COMPONENT - User login form with validation
+// React equivalent: Functional component with form handling
+// ============================================================================
+
 import { Component, inject, signal } from '@angular/core';
 import { Button } from '@components/button';
 import { RouterLink } from '@angular/router';
@@ -19,11 +24,15 @@ import { PASSWORD_MIN_LENGTH, VALIDATION_MESSAGES } from '@shared/constants/vali
 export class Login {
   private readonly store = inject(Store);
 
+  // Form model with initial values
+  // React: const [formData, setFormData] = useState({ username: '', password: '' })
   readonly loginModel = signal({
     username: '',
     password: '',
   });
 
+  // Form with validation rules
+  // React: Using libraries like react-hook-form or formik
   readonly loginForm = form(this.loginModel, (rootPath) => {
     required(rootPath.username, { message: VALIDATION_MESSAGES.USERNAME_REQUIRED });
     required(rootPath.password, { message: VALIDATION_MESSAGES.PASSWORD_REQUIRED });
@@ -32,6 +41,8 @@ export class Login {
     });
   });
 
+  // Handle form submission
+  // React: const handleSubmit = (e) => { e.preventDefault(); dispatch(login(formData)) }
   onSubmit(event: Event): void {
     event.preventDefault();
     if (this.loginForm().valid()) {

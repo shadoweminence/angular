@@ -1,65 +1,74 @@
-import { inject, OnInit, signal } from '@angular/core';
-import { CommonModule, NgClass, NgFor } from '@angular/common';
+// ============================================================================
+// PRODUCTS COMPONENT - Display and filter products from API
+// React equivalent: Functional component with hooks (useState, useEffect, useSelector)
+// ============================================================================
+
+import { inject, OnInit, computed } from '@angular/core';
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { DataViewModule, DataView } from 'primeng/dataview';
-import { SelectButtonModule, SelectButton } from 'primeng/selectbutton';
+import { DataViewModule } from 'primeng/dataview';
 import { SkeletonModule } from 'primeng/skeleton';
-import { SelectItem } from 'primeng/api';
 import { Store } from '@ngrx/store';
 import { productActions } from '../../shared/store/productActions';
 import { productFeatures, selectProducts } from '../../shared/store/productFeatures';
 
-import { ButtonModule } from 'primeng/button';
-
 @Component({
   selector: 'app-products',
-  imports: [
-    DataViewModule,
-    CommonModule,
-    SelectButtonModule,
-    SkeletonModule,
-    FormsModule,
-    DataView,
-    ButtonModule,
-  ],
+  imports: [DataViewModule, SkeletonModule],
   templateUrl: './products.html',
 })
 export class Products implements OnInit {
-  private store = inject(Store);
-  sortOptions!: SelectItem[];
-  sortOrder!: number;
-  sortField!: string;
-  products = this.store.selectSignal(selectProducts);
+  private readonly store = inject(Store);
+  
+  // Select all products from store
+  // React: const allProducts = useSelector(selectProducts)
+  private allProducts = this.store.selectSignal(selectProducts);
+  
+  // Select category filter from store
+  // React: const categoryFilter = useSelector(state => state.product.categoryFilter)
+  private categoryFilter = this.store.selectSignal(productFeatures.selectCategoryFilter);
+  
+  // Computed signal that filters products based on selected category
+  // React: const products = useMemo(() => { ... }, [allProducts, categoryFilter])
+  products = computed(() => {
+    const products = this.allProducts();
+    const filter = this.categoryFilter();
+    
+    // Return all products if no filter is applied
+    if (!filter || !products) return products || [];
+    
+    // Filter products by category
+    const filtered = products.filter((product: any) => {
+      const category = product.category || '';
+      
+      // Map filter values to API category names
+      if (filter === 'male') {
+        return category === "men's clothing";
+      } else if (filter === 'female') {
+        return category === "women's clothing";
+      } else if (filter === 'jewelery') {
+        return category === 'jewelery';
+      } else if (filter === 'electronics') {
+        return category === 'electronics';
+      }
+      return true;
+    });
+    
+    return filtered;
+  });
+  
+  // Loading state from store
+  // React: const isLoading = useSelector(state => state.product.isLoading)
   isLoading = this.store.selectSignal(productFeatures.selectIsLoading);
 
-  options = ['list', 'grid'];
-
+  // Load products on component initialization
+  // React: useEffect(() => { dispatch(loadProducts()) }, [])
   ngOnInit(): void {
-    this.sortOptions = [
-      { label: 'Price High to Low', value: '!price' },
-      { label: 'Price Low to High', value: 'price' },
-    ];
-
     this.store.dispatch(productActions.loadProducts());
   }
+  
+  // Helper function to create array for skeleton loaders
+  // React: const counterArray = (n) => Array(n).fill(0)
   counterArray(n: number): number[] {
     return Array(n);
   }
-
-  // getSeverity(product: Product) {
-  //   switch (product.inventoryStatus) {
-  //     case 'INSTOCK':
-  //       return 'success';
-
-  //     case 'LOWSTOCK':
-  //       return 'warn';
-
-  //     case 'OUTOFSTOCK':
-  //       return 'danger';
-
-  //     default:
-  //       return null;
-  //   }
-  // }
 }
