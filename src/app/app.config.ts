@@ -13,12 +13,19 @@ import { routes } from './app.routes';
 import { provideStore } from '@ngrx/store'; // React: <Provider store={store}>
 import { provideEffects } from '@ngrx/effects'; // React: Redux middleware (thunk/saga)
 import { provideHttpClient } from '@angular/common/http'; // React: axios/fetch (no provider needed)
-import { loginEffect, logoutEffect, registerEffect, restoreSessionEffect } from '@store/auth-effect';
+import {
+  loginEffect,
+  logoutEffect,
+  registerEffect,
+  restoreSessionEffect,
+} from '@store/auth-effect';
 import { authFeatures } from '@store/auth-features';
 import { environment } from '@environments/environment';
 import { provideNgToast } from 'ng-angular-popup';
 import { providePrimeNG } from 'primeng/config';
 import Aura from '@primeuix/themes/aura';
+import { productFeatures } from './shared/store/productFeatures';
+import { productEffect } from './shared/store/productEffect';
 
 // InjectionToken: Angular's way to provide values through Dependency Injection
 // React equivalent: process.env.REACT_APP_API_URL or Context
@@ -43,12 +50,21 @@ export const appConfig: ApplicationConfig = {
     // State management store with auth reducer
     // React equivalent: const store = configureStore({ reducer: { auth: authReducer } })
     // Then wrap app with <Provider store={store}>
-    provideStore({ [authFeatures.name]: authFeatures.reducer }),
+    provideStore({
+      [authFeatures.name]: authFeatures.reducer,
+      [productFeatures.name]: productFeatures.reducer,
+    }),
 
     // Side effects middleware for async operations (like API calls)
     // React equivalent: Redux Thunk (built-in) or Redux Saga middleware
     // In React: middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(thunk)
-    provideEffects({ loginEffect, registerEffect, restoreSessionEffect, logoutEffect }),
+    provideEffects({
+      loginEffect,
+      registerEffect,
+      restoreSessionEffect,
+      logoutEffect,
+      productEffect,
+    }),
 
     // ========================================================================
     // DEPENDENCY INJECTION: Provide API_URL token with actual value
@@ -81,8 +97,8 @@ export const appConfig: ApplicationConfig = {
     // - Flexibility: Can change value based on environment
     // - Decoupling: Services don't need to know where value comes from
     {
-      provide: API_URL,              // The token (what to inject)
-      useValue: environment.apiUrl,  // The value (what you get)
+      provide: API_URL, // The token (what to inject)
+      useValue: environment.apiUrl, // The value (what you get)
     },
     // Other provider options:
     // - useClass: Provide a class instance
