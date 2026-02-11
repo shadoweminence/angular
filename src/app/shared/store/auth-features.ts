@@ -15,10 +15,23 @@ export type AuthState = {
   isLoading: boolean;
 };
 
+// Helper to get token from storage on initialization
+const getInitialToken = (): string | null => {
+  if (typeof window !== 'undefined' && window.localStorage) {
+    const token = localStorage.getItem('token');
+    try {
+      return token ? JSON.parse(token) : null;
+    } catch {
+      return token; // fallback if not JSON
+    }
+  }
+  return null;
+};
+
 // Initial state
 // React: Same concept in createSlice
 export const initialAuthState: AuthState = {
-  token: null,
+  token: getInitialToken(),
   userId: null,
   error: null,
   isLoading: false,
