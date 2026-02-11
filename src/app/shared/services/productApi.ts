@@ -9,20 +9,16 @@ import { HttpClient } from '@angular/common/http'; // React: axios or fetch
 
 // Type definitions for API requests/responses
 // React: Same, TypeScript types or PropTypes
-export type LoginRequest = {
-  username: string;
-  password: string;
-};
 
-export type LoginResponse = {
-  token: string;
-};
+export type ProductRequest = {};
 
-export type RegisterRequest = {
-  username: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
+export type ProductResponse = {
+  id: number;
+  title: string;
+  price: number;
+  description: string;
+  category: string;
+  image: string;
 };
 
 // @Injectable: Makes this class available for dependency injection
@@ -35,7 +31,7 @@ export type RegisterRequest = {
 @Injectable({
   providedIn: 'root',
 })
-export class AuthApi {
+export class ProductApi {
   // inject(): Get dependencies from Angular's DI container
   // React equivalent: import directly or use Context
   //   const API_URL = process.env.REACT_APP_API_URL;
@@ -52,21 +48,10 @@ export class AuthApi {
   //     const response = await axios.post(`${API_URL}/auth/login`, request);
   //     return response.data;
   //   }
-  login(request: LoginRequest) {
-    const url = `${this.baseApiUrl}/auth/login`;
+  getProducts() {
+    const url = `${this.baseApiUrl}/products`;
     // Returns Observable (RxJS) - needs to be subscribed or piped
     // React: Returns Promise - use await or .then()
-    return this.http.post<LoginResponse>(url, request);
-  }
-
-  // Register method
-  // React equivalent:
-  //   register: async (request) => {
-  //     const response = await axios.post(`${API_URL}/users`, request);
-  //     return response.data;
-  //   }
-  register(request: RegisterRequest) {
-    const url = `${this.baseApiUrl}/users`;
-    return this.http.post<RegisterRequest>(url, request);
+    return this.http.get<ProductResponse[]>(url);
   }
 }
