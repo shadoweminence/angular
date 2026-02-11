@@ -1,16 +1,12 @@
-// ============================================================================
-// LOGIN COMPONENT - User authentication form
-// React equivalent: function Login() { ... }
-// ============================================================================
-
 import { Component, inject, signal } from '@angular/core';
 import { Button } from '@components/button';
-import { RouterLink } from '@angular/router'; // React: import { Link } from 'react-router-dom'
+import { RouterLink } from '@angular/router';
 import { form, FormField, minLength, required } from '@angular/forms/signals';
 import { FormsModule } from '@angular/forms';
 import { FormErrors } from '@components/form-errors';
-import { Store } from '@ngrx/store'; // React: import { useDispatch } from 'react-redux'
+import { Store } from '@ngrx/store';
 import { authActions } from '@store/auth-actions';
+import { PASSWORD_MIN_LENGTH, VALIDATION_MESSAGES } from '@shared/constants/validation.constants';
 
 @Component({
   selector: 'app-login',
@@ -21,34 +17,24 @@ import { authActions } from '@store/auth-actions';
   },
 })
 export class Login {
-  // inject(): Dependency Injection to get Store instance
-  // React equivalent: const dispatch = useDispatch()
-  private store = inject(Store);
+  private readonly store = inject(Store);
 
-  // signal(): Reactive state primitive
-  // React equivalent: const [loginModel, setLoginModel] = useState({ username: '', password: '' })
-  loginModel = signal({
+  readonly loginModel = signal({
     username: '',
     password: '',
   });
 
-  // form(): Signal-based form with validation schema
-  // React equivalent: const { register, handleSubmit, formState } = useForm()
-  loginForm = form(this.loginModel, (rootPath) => {
-    // Validation rules
-    // React equivalent: register('username', { required: 'username is required' })
-    required(rootPath.username, { message: 'username is required' });
-    required(rootPath.password, { message: 'Password is required' });
-    minLength(rootPath.password, 6, { message: 'Password must be at least 6 characters long' });
+  readonly loginForm = form(this.loginModel, (rootPath) => {
+    required(rootPath.username, { message: VALIDATION_MESSAGES.USERNAME_REQUIRED });
+    required(rootPath.password, { message: VALIDATION_MESSAGES.PASSWORD_REQUIRED });
+    minLength(rootPath.password, PASSWORD_MIN_LENGTH, {
+      message: VALIDATION_MESSAGES.PASSWORD_MIN_LENGTH,
+    });
   });
 
-  // Method to handle form submission
-  // React equivalent: const handleSubmit = (e) => { ... }
-  onSubmit(event: Event) {
+  onSubmit(event: Event): void {
     event.preventDefault();
     if (this.loginForm().valid()) {
-      // Dispatch action to NgRx store
-      // React equivalent: dispatch(login(formData))
       this.store.dispatch(authActions.login(this.loginForm().value()));
     }
   }

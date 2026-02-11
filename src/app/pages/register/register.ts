@@ -1,15 +1,10 @@
-// ============================================================================
-// REGISTER COMPONENT - User registration form
-// React equivalent: function Register() { ... }
-// ============================================================================
-
 import { Component, inject, signal } from '@angular/core';
 import { Button } from '@components/button';
 import { RouterLink } from '@angular/router';
-import { form, FormField, minLength, required, validate } from '@angular/forms/signals';
+import { form, FormField } from '@angular/forms/signals';
 import { FormErrors } from '@components/form-errors';
 import { registerSchema } from './register-schema';
-import { Store } from '@ngrx/store'; // React: useDispatch hook
+import { Store } from '@ngrx/store';
 import { authActions } from '@store/auth-actions';
 
 @Component({
@@ -21,28 +16,20 @@ import { authActions } from '@store/auth-actions';
   },
 })
 export class Register {
-  // Inject Store for dispatching actions
-  // React: const dispatch = useDispatch()
-  private store = inject(Store);
+  private readonly store = inject(Store);
 
-  // Signal for form state
-  // React: const [registerModel, setRegisterModel] = useState({ ... })
-  registerModel = signal({
+  readonly registerModel = signal({
     username: '',
     email: '',
     password: '',
     confirmPassword: '',
   });
 
-  // Form with external validation schema
-  // React: useForm with yup/zod schema
-  registerForm = form(this.registerModel, registerSchema);
+  readonly registerForm = form(this.registerModel, registerSchema);
 
-  onSubmit(event: Event) {
+  onSubmit(event: Event): void {
     event.preventDefault();
     if (this.registerForm().valid()) {
-      // Dispatch register action to store
-      // React: dispatch(register(formData))
       this.store.dispatch(authActions.register(this.registerForm().value()));
     }
   }

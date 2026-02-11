@@ -8,6 +8,7 @@ import { RippleModule } from 'primeng/ripple';
 import { MenuModule } from 'primeng/menu';
 import { Store } from '@ngrx/store';
 import { authActions } from '@store/auth-actions';
+import { PRODUCTS_MENU_ITEMS, USER_MENU_ITEMS } from '../constants/menu.constants';
 
 @Component({
   selector: 'app-header',
@@ -15,44 +16,18 @@ import { authActions } from '@store/auth-actions';
   templateUrl: './header.html',
 })
 export class Header implements OnInit {
-  private store = inject(Store);
-  items: MenuItem[] | undefined;
-  userMenuItems: MenuItem[] | undefined;
+  private readonly store = inject(Store);
+
+  items: MenuItem[] = [];
+  userMenuItems: MenuItem[] = [];
   isMenuOpen = false;
 
-  ngOnInit() {
-    this.items = [
-      {
-        label: 'New',
-        icon: 'pi pi-fw pi-plus',
-      },
-      {
-        label: 'Edit',
-        icon: 'pi pi-fw pi-pencil',
-      },
-    ];
-
-    this.userMenuItems = [
-      {
-        label: 'Profile',
-        icon: 'pi pi-fw pi-user',
-      },
-      {
-        label: 'Settings',
-        icon: 'pi pi-fw pi-cog',
-      },
-      {
-        separator: true,
-      },
-      {
-        label: 'Log Out',
-        icon: 'pi pi-fw pi-sign-out',
-        command: () => this.onLogout(),
-      },
-    ];
+  ngOnInit(): void {
+    this.items = PRODUCTS_MENU_ITEMS;
+    this.userMenuItems = USER_MENU_ITEMS(() => this.handleLogout());
   }
 
-  onLogout() {
+  private handleLogout(): void {
     this.store.dispatch(authActions.logout());
   }
 }
