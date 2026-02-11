@@ -20,7 +20,6 @@ import { ButtonModule } from 'primeng/button';
     SelectButtonModule,
     SkeletonModule,
     FormsModule,
-    SelectButton,
     DataView,
     ButtonModule,
   ],
@@ -33,7 +32,6 @@ export class Products implements OnInit {
   sortField!: string;
   products = this.store.selectSignal(selectProducts);
   isLoading = this.store.selectSignal(productFeatures.selectIsLoading);
-  layout: 'list' | 'grid' = 'grid';
 
   options = ['list', 'grid'];
 
