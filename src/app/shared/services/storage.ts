@@ -8,7 +8,8 @@ export class Storage {
     localStorage.setItem(key, JSON.stringify(value));
   }
   get(key: string) {
-    return JSON.parse(localStorage.getItem(key) || '{}');
+    const item = localStorage.getItem(key);
+    return item ? JSON.parse(item) : null;
   }
   remove(key: string) {
     localStorage.removeItem(key);

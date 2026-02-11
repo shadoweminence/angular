@@ -5,7 +5,7 @@
 // ============================================================================
 
 import { inject } from '@angular/core';
-import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { Actions, createEffect, ofType, ROOT_EFFECTS_INIT } from '@ngrx/effects';
 import { AuthApi } from '../services/auth-api';
 import { Router } from '@angular/router';
 import { authActions } from './auth-actions';
@@ -124,12 +124,17 @@ export const registerEffect = createEffect(
 //   });
 
 export const restoreSessionEffect = createEffect(
-  () => {
-    const token = localStorage.getItem('auth_token');
-    if (!token) {
-      return EMPTY;
-    }
-    return of(authActions.restoreSession({ token }));
+  (actions$ = inject(Actions), storage = inject(Storage)) => {
+    return actions$.pipe(
+      ofType(ROOT_EFFECTS_INIT),
+      map(() => {
+        const token = storage.get('token');
+        if (!token) {
+          return authActions.logout();
+        }
+        return authActions.restoreSession({ token });
+      }),
+    );
   },
   {
     functional: true,
