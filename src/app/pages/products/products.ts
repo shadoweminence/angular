@@ -20,7 +20,6 @@ import { ButtonModule } from 'primeng/button';
     SelectButtonModule,
     SkeletonModule,
     FormsModule,
-    NgClass,
     SelectButton,
     DataView,
     ButtonModule,
