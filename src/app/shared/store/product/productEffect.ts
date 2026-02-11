@@ -21,7 +21,7 @@ export const productEffect = createEffect(
     return actions$.pipe(
       // Listen for loadProducts action
       ofType(productActions.loadProducts),
-      
+
       // switchMap: Cancel previous request if new one comes in
       switchMap(() => {
         // Make API call (returns Observable)
