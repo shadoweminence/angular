@@ -4,13 +4,14 @@
 // ============================================================================
 
 import { createFeature, createReducer, createSelector, on } from '@ngrx/store';
-import { ProductResponse } from '../services/productApi';
-import { productActions } from './productActions';
+import { ProductResponse } from '@app/shared/services/productApi';
+import { productActions } from '@app/shared/store/product/productActions';
 
 // State type definition
 // React: Same, defined in TypeScript or JSDoc
 export type ProductState = {
   products: ProductResponse[] | null;
+  product: ProductResponse | null;
   error: string | null;
   isLoading: boolean;
   categoryFilter: 'male' | 'female' | 'jewelery' | 'electronics' | null;
@@ -20,6 +21,7 @@ export type ProductState = {
 // React: Same concept in createSlice
 export const initialProductState: ProductState = {
   products: null,
+  product: null,
   error: null,
   isLoading: false,
   categoryFilter: null,
@@ -52,7 +54,7 @@ export const productFeatures = createFeature({
     // Handle loadProductsSuccess action
     // React: .addCase(loadProducts.fulfilled, (state, action) => { ... })
     on(productActions.loadProductsSuccess, (state, { products }) => ({
-      ...state, // Spread operator for immutability
+      ...state,
       products,
       isLoading: false,
     })),
@@ -70,6 +72,23 @@ export const productFeatures = createFeature({
     on(productActions.setCategoryFilter, (state, { category }) => ({
       ...state,
       categoryFilter: category,
+    })),
+
+    on(productActions.getProductById, (state) => ({
+      ...state,
+      isLoading: true,
+    })),
+
+    on(productActions.getProductByIdSuccess, (state, { product }) => ({
+      ...state,
+      product,
+      isLoading: false,
+    })),
+
+    on(productActions.getProductByIdFailure, (state, { error }) => ({
+      ...state,
+      error,
+      isLoading: false,
     })),
   ),
 });

@@ -10,6 +10,7 @@ import { NgToastComponent } from 'ng-angular-popup';
 // React equivalent: Just export a function component (no decorator needed)
 @Component({
   selector: 'app-root',
+  standalone: true,
   imports: [RouterOutlet, NgToastComponent],
   templateUrl: './app.html',
   styleUrl: './app.css',

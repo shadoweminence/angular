@@ -6,9 +6,9 @@
 
 import { inject } from '@angular/core';
 import { Actions, createEffect, ofType, ROOT_EFFECTS_INIT } from '@ngrx/effects';
-import { AuthApi } from '../services/auth-api';
+import { AuthApi } from '@app/shared/services/auth-api';
 import { Router } from '@angular/router';
-import { authActions } from '@store/auth-actions';
+import { authActions } from '@app/shared/store/auth/auth-actions';
 import { catchError, EMPTY, map, of, switchMap } from 'rxjs';
 import { NgToastService } from 'ng-angular-popup';
 import { Storage } from '@services/storage';

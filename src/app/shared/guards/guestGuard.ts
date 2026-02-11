@@ -7,7 +7,7 @@ import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { map } from 'rxjs';
-import { selectIsLoggedIn } from '../store/auth-selectors';
+import { selectIsLoggedIn } from '@app/shared/store/auth/auth-selectors';
 
 // Guard to mark routes as public (login, register)
 // Redirects logged-in users to products page

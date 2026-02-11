@@ -10,8 +10,8 @@ import { AvatarModule } from 'primeng/avatar';
 import { BadgeModule } from 'primeng/badge';
 import { MenuModule } from 'primeng/menu';
 import { Store } from '@ngrx/store';
-import { authActions } from '@store/auth-actions';
-import { productActions } from '@store/productActions';
+import { authActions } from '@store/auth/auth-actions';
+import { productActions } from '@store/product/productActions';
 import { PRODUCTS_MENU_ITEMS, USER_MENU_ITEMS } from '../constants/menu.constants';
 
 @Component({
@@ -37,9 +37,7 @@ export class Header implements OnInit {
   // React: const handleCategorySelect = (category) => { ... }
   onCategorySelect(category: 'male' | 'female' | 'jewelery' | 'electronics'): void {
     this.selectedCategory = this.selectedCategory === category ? null : category;
-    this.store.dispatch(
-      productActions.setCategoryFilter({ category: this.selectedCategory }),
-    );
+    this.store.dispatch(productActions.setCategoryFilter({ category: this.selectedCategory }));
   }
 
   // Handle user logout

@@ -7,8 +7,8 @@
 import { inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, map, of, switchMap } from 'rxjs';
-import { ProductApi } from '../services/productApi';
-import { productActions } from './productActions';
+import { ProductApi } from '@app/shared/services/productApi';
+import { productActions } from '@app/shared/store/product/productActions';
 
 // createEffect: Listens to actions and performs side effects
 // React equivalent with Redux Toolkit:
@@ -43,5 +43,24 @@ export const productEffect = createEffect(
   },
   {
     functional: true, // New functional effect style
+  },
+);
+
+export const productByIdEffect = createEffect(
+  (actions$ = inject(Actions), productApi = inject(ProductApi)) => {
+    return actions$.pipe(
+      ofType(productActions.getProductById),
+      switchMap((id) => {
+        return productApi.getProductById(Number(id)).pipe(
+          map((product) => {
+            return productActions.getProductByIdSuccess({ product });
+          }),
+          catchError((error) => of(productActions.getProductByIdFailure({ error: error.message }))),
+        );
+      }),
+    );
+  },
+  {
+    functional: true,
   },
 );

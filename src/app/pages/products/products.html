@@ -53,6 +53,7 @@
                     {{ '$' + item.price }}
                   </span>
                   <button
+                    [routerLink]="['/products', item.id]"
                     pButton
                     icon="pi pi-shopping-cart"
                     class="p-button-rounded"

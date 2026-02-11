@@ -4,7 +4,7 @@
 // ============================================================================
 
 import { createActionGroup, emptyProps, props } from '@ngrx/store';
-import { ProductResponse } from '../services/productApi';
+import { ProductResponse } from '@app/shared/services/productApi';
 
 // createActionGroup: Creates a group of related actions
 // React equivalent: In Redux Toolkit, actions are auto-generated in createSlice
@@ -16,9 +16,15 @@ export const productActions = createActionGroup({
     loadProducts: emptyProps(),
     loadProductsSuccess: props<{ products: ProductResponse[] }>(),
     loadProductsFailure: props<{ error: string }>(),
-    
+
     // Filter products action
     // React: dispatch(setCategoryFilter({ category: 'male' }))
-    'Set Category Filter': props<{ category: 'male' | 'female' | 'jewelery' | 'electronics' | null }>(),
+    'Set Category Filter': props<{
+      category: 'male' | 'female' | 'jewelery' | 'electronics' | null;
+    }>(),
+
+    getProductById: props<{ id: number }>(),
+    getProductByIdSuccess: props<{ product: ProductResponse }>(),
+    getProductByIdFailure: props<{ error: string }>(),
   },
 });

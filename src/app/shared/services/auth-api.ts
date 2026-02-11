@@ -4,7 +4,7 @@
 // ============================================================================
 
 import { inject, Injectable } from '@angular/core';
-import { API_URL } from '../tokens/api-token';
+import { API_URL } from '@app/shared/tokens/api-token';
 import { HttpClient } from '@angular/common/http'; // React: axios or fetch
 
 // Type definitions for API requests/responses

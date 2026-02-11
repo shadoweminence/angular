@@ -14,16 +14,15 @@ import {
   logoutEffect,
   registerEffect,
   restoreSessionEffect,
-} from '@store/auth-effect';
-import { authFeatures } from '@store/auth-features';
+} from '@store/auth/auth-effect';
+import { authFeatures } from '@store/auth/auth-features';
 import { environment } from '@environments/environment';
 import { provideNgToast } from 'ng-angular-popup';
 import { providePrimeNG } from 'primeng/config';
 import Aura from '@primeuix/themes/aura';
-import { productFeatures } from './shared/store/productFeatures';
-import { productEffect } from './shared/store/productEffect';
-
-import { API_URL } from './shared/tokens/api-token';
+import { API_URL } from '@app/shared/tokens/api-token';
+import { productFeatures } from '@store/product/productFeatures';
+import { productEffect } from '@store/product/productEffect';
 
 // ApplicationConfig: Central configuration for the entire Angular app
 // React equivalent: Wrapping App component with providers in index.js/App.js

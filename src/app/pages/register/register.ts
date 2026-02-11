@@ -10,7 +10,7 @@ import { form, FormField } from '@angular/forms/signals';
 import { FormErrors } from '@components/form-errors';
 import { registerSchema } from './register-schema';
 import { Store } from '@ngrx/store';
-import { authActions } from '@store/auth-actions';
+import { authActions } from '@app/shared/store/auth/auth-actions';
 
 @Component({
   selector: 'app-register',

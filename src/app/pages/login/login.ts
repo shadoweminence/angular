@@ -10,7 +10,7 @@ import { form, FormField, minLength, required } from '@angular/forms/signals';
 import { FormsModule } from '@angular/forms';
 import { FormErrors } from '@components/form-errors';
 import { Store } from '@ngrx/store';
-import { authActions } from '@store/auth-actions';
+import { authActions } from '@app/shared/store/auth/auth-actions';
 import { PASSWORD_MIN_LENGTH, VALIDATION_MESSAGES } from '@shared/constants/validation.constants';
 
 @Component({
