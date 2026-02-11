@@ -18,7 +18,7 @@ export type ProductResponse = {
   price: number;
   description: string;
   category: string;
-  imgae: string;
+  image: string;
 };
 
 // @Injectable: Makes this class available for dependency injection

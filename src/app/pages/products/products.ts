@@ -8,7 +8,9 @@ import { SkeletonModule } from 'primeng/skeleton';
 import { SelectItem } from 'primeng/api';
 import { Store } from '@ngrx/store';
 import { productActions } from '../../shared/store/productActions';
-import { selectProducts } from '../../shared/store/productFeatures';
+import { productFeatures, selectProducts } from '../../shared/store/productFeatures';
+
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-products',
@@ -21,6 +23,7 @@ import { selectProducts } from '../../shared/store/productFeatures';
     NgClass,
     SelectButton,
     DataView,
+    ButtonModule,
   ],
   templateUrl: './products.html',
 })
@@ -29,7 +32,8 @@ export class Products implements OnInit {
   sortOptions!: SelectItem[];
   sortOrder!: number;
   sortField!: string;
-  products = signal<any>([]);
+  products = this.store.selectSignal(selectProducts);
+  isLoading = this.store.selectSignal(productFeatures.selectIsLoading);
   layout: 'list' | 'grid' = 'grid';
 
   options = ['list', 'grid'];
@@ -41,10 +45,6 @@ export class Products implements OnInit {
     ];
 
     this.store.dispatch(productActions.loadProducts());
-
-    this.store.select(selectProducts).subscribe((products) => {
-      this.products.set(products);
-    });
   }
   counterArray(n: number): number[] {
     return Array(n);
