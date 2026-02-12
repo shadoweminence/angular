@@ -12,6 +12,7 @@ import { productActions } from '@store/product/productActions';
 import { ButtonModule } from 'primeng/button';
 import { SkeletonModule } from 'primeng/skeleton';
 import { ROUTES } from '@app/enums/router';
+import { cartActions } from '@app/shared/store/cart/cartActions';
 
 @Component({
   selector: 'app-product-detail',
@@ -46,6 +47,23 @@ export class ProductDetail implements OnInit {
         const id = Number(idParam);
         this.store.dispatch(productActions.getProductById({ id }));
       }
+    }
+  }
+
+  addToCart() {
+    const product = this.product();
+    const request = {
+      id: 1,
+      userId: 1,
+      products: [
+        {
+          productId: product?.id!,
+          quantity: 1,
+        },
+      ],
+    };
+    if (product) {
+      this.store.dispatch(cartActions.addCart({ request }));
     }
   }
 }

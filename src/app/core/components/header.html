@@ -124,6 +124,13 @@
             [class.text-gray-400]="selectedCategory !== 'jewelery'"
             (click)="onCategorySelect('jewelery')"
             title="Jewelery"
+          ></i
+          ><i
+            class="pi pi-venus cursor-pointer transition-colors text-lg md:text-xl"
+            [class.text-pink-500]="selectedCategory === 'female'"
+            [class.text-gray-400]="selectedCategory !== 'female'"
+            (click)="onCategorySelect('female')"
+            title="Women's Products"
           ></i>
           <i
             class="pi pi-desktop cursor-pointer transition-colors text-lg md:text-xl"
@@ -143,6 +150,13 @@
           placeholder="Search"
           class="hidden sm:block w-32 md:w-40 px-3 py-2 border rounded"
         />
+        <i
+          class="pi pi-cart-plus cursor-pointer transition-colors text-lg md:text-xl"
+          [class.text-pink-500]="selectedCategory === 'female'"
+          [class.text-gray-400]="selectedCategory !== 'female'"
+          [routerLink]="['/', ROUTES.CART]"
+          title="Women's Products"
+        ></i>
         <p-avatar
           image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png"
           shape="circle"

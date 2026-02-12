@@ -1,1 +1,72 @@
-<h1>Cart Page</h1>
+<div class="card">
+  <p-dataview #dv [value]="carts()" layout="list">
+    <ng-template #list let-items>
+      <div class="flex flex-col">
+        @if (isLoading()) {
+          @for (i of counterArray(3); track $index; let first = $first) {
+            <div
+              class="flex flex-col xl:flex-row xl:items-start p-6 gap-6"
+              [ngClass]="{ 'border-t border-surface-200 dark:border-surface-700': !first }"
+            >
+              <p-skeleton class="w-9/12 sm:w-64 xl:w-40 h-24 mx-auto" />
+              <div
+                class="flex flex-col sm:flex-row justify-between items-center xl:items-start flex-1 gap-6"
+              >
+                <div class="flex flex-col items-center sm:items-start gap-4">
+                  <p-skeleton width="8rem" height="2rem" />
+                  <p-skeleton width="6rem" height="1rem" />
+                </div>
+                <div class="flex sm:flex-col items-center sm:items-end gap-4 sm:gap-2">
+                  <p-skeleton width="4rem" height="2rem" />
+                  <p-skeleton size="3rem" shape="circle" />
+                </div>
+              </div>
+            </div>
+          }
+        } @else {
+          @for (item of items; track item.id; let first = $first) {
+            <div
+              class="flex flex-col xl:flex-row xl:items-start p-6 gap-6"
+              [ngClass]="{ 'border-t border-surface-200 dark:border-surface-700': !first }"
+            >
+              <div
+                class="flex flex-col sm:flex-row justify-between items-center xl:items-start flex-1 gap-6"
+              >
+                <div class="flex flex-col items-center sm:items-start gap-4">
+                  <div class="text-lg font-bold text-surface-900 dark:text-surface-0">
+                    {{ item.productId }}
+                  </div>
+                  <div class="flex items-center gap-2">
+                    <i class="pi pi-tag text-surface-500"></i>
+                    <span class="font-semibold text-surface-600 dark:text-surface-400">{{
+                      item.quantity
+                    }}</span>
+                  </div>
+                </div>
+                <div class="flex sm:flex-col items-center sm:items-end gap-4 sm:gap-2">
+                  <button
+                    pButton
+                    icon="pi pi-trash"
+                    class="p-button-rounded"
+                    severity="danger"
+                  ></button>
+                </div>
+              </div>
+            </div>
+          } @empty {
+            <div class="flex flex-col items-center justify-center p-20 gap-4">
+              <i class="pi pi-shopping-cart text-6xl text-surface-400"></i>
+              <span class="text-xl font-medium text-surface-500">Your cart is empty</span>
+              <button
+                pButton
+                label="Continue Shopping"
+                icon="pi pi-arrow-left"
+                [routerLink]="['/']"
+              ></button>
+            </div>
+          }
+        }
+      </div>
+    </ng-template>
+  </p-dataview>
+</div>

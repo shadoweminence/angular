@@ -6,19 +6,18 @@
 import { inject, Injectable } from '@angular/core';
 import { API_URL } from '@app/shared/tokens/api-token';
 import { HttpClient } from '@angular/common/http'; // React: axios or fetch
+import { ProductResponse } from './productApi';
 
 // Type definitions for API requests/responses
 // React: Same, TypeScript types or PropTypes
 
-export type ProductRequest = {};
-
-export type ProductResponse = {
+export type CartRequest = {
   id: number;
-  title: string;
-  price: number;
-  description: string;
-  category: string;
-  image: string;
+  userId: number;
+  products: {
+    productId: number;
+    quantity: number;
+  }[];
 };
 
 // @Injectable: Makes this class available for dependency injection
@@ -31,7 +30,7 @@ export type ProductResponse = {
 @Injectable({
   providedIn: 'root',
 })
-export class ProductApi {
+export class CartApi {
   // inject(): Get dependencies from Angular's DI container
   // React equivalent: import directly or use Context
   //   const API_URL = process.env.REACT_APP_API_URL;
@@ -48,17 +47,17 @@ export class ProductApi {
   //     const response = await axios.post(`${API_URL}/auth/login`, request);
   //     return response.data;
   //   }
-  getProducts() {
-    const url = `${this.baseApiUrl}/products`;
+  getCart() {
+    const url = `${this.baseApiUrl}/carts`;
     // Returns Observable (RxJS) - needs to be subscribed or piped
     // React: Returns Promise - use await or .then()
-    return this.http.get<ProductResponse[]>(url);
+    return this.http.get<CartRequest[]>(url);
   }
 
-  getProductById(id: number) {
-    const url = `${this.baseApiUrl}/products/${id}`;
+  addCart(request: CartRequest) {
+    const url = `${this.baseApiUrl}/carts`;
     // Returns Observable (RxJS) - needs to be subscribed or piped
     // React: Returns Promise - use await or .then()
-    return this.http.get<ProductResponse>(url);
+    return this.http.post<CartRequest>(url, request);
   }
 }

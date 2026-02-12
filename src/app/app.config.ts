@@ -23,6 +23,8 @@ import Aura from '@primeuix/themes/aura';
 import { API_URL } from '@app/shared/tokens/api-token';
 import { productFeatures } from '@store/product/productFeatures';
 import { productEffect, productByIdEffect } from '@store/product/productEffect';
+import { cartFeatures } from './shared/store/cart/cartFeatures';
+import { addCartEffect, cartEffect } from './shared/store/cart/cartEffect';
 
 // ApplicationConfig: Central configuration for the entire Angular app
 // React equivalent: Wrapping App component with providers in index.js/App.js
@@ -46,6 +48,7 @@ export const appConfig: ApplicationConfig = {
     provideStore({
       [authFeatures.name]: authFeatures.reducer,
       [productFeatures.name]: productFeatures.reducer,
+      [cartFeatures.name]: cartFeatures.reducer,
     }),
 
     // Side effects middleware for async operations (like API calls)
@@ -58,6 +61,8 @@ export const appConfig: ApplicationConfig = {
       logoutEffect,
       productEffect,
       productByIdEffect,
+      cartEffect,
+      addCartEffect,
     }),
 
     // ========================================================================
