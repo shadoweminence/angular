@@ -53,7 +53,7 @@
       </app-button>
       <p class="text-center text-sm text-gray-600 mt-4">
         Already have an account?
-        <a routerLink="/login" class="text-blue-500 hover:underline">Login</a>
+        <a [routerLink]="['/', ROUTES.LOGIN]" class="text-blue-500 hover:underline">Login</a>
       </p>
     </form>
   </div>

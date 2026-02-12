@@ -14,6 +14,7 @@ import { authActions } from '@store/auth/auth-actions';
 import { productActions } from '@store/product/productActions';
 import { PRODUCTS_MENU_ITEMS, USER_MENU_ITEMS } from '../constants/menu.constants';
 import { RouterLink } from '@angular/router';
+import { ROUTES } from '@app/enums/router';
 
 @Component({
   selector: 'app-header',
@@ -22,6 +23,7 @@ import { RouterLink } from '@angular/router';
 })
 export class Header implements OnInit {
   private readonly store = inject(Store);
+  readonly ROUTES = ROUTES;
 
   items: MenuItem[] = [];
   userMenuItems: MenuItem[] = [];

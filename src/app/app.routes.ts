@@ -6,6 +6,7 @@
 import { Routes } from '@angular/router';
 import { guestGuard } from './shared/guards/guestGuard';
 import { authGuard } from './shared/guards/authGuard';
+import { ROUTES } from './enums/router';
 
 // Routes array: Configuration-based routing (declarative)
 // React equivalent: Component-based routing with JSX
@@ -38,20 +39,20 @@ export const routes: Routes = [
       // Child routes render inside parent's <router-outlet>
       // React: Child routes render in parent's <Outlet />
       {
-        path: 'products',
+        path: ROUTES.HOME,
         loadComponent: () => import('./pages/products/products').then((m) => m.Products),
       },
       {
-        path: 'products/:id',
+        path: `${ROUTES.PRODUCT_DETAIL}/:id`,
         loadComponent: () =>
           import('./pages/product-detail/product-detail').then((m) => m.ProductDetail),
       },
       {
-        path: 'cart',
+        path: ROUTES.CART,
         loadComponent: () => import('./pages/cart/cart').then((m) => m.Cart),
       },
       {
-        path: 'profile',
+        path: ROUTES.PROFILE,
         loadComponent: () => import('./pages/profile/profile').then((m) => m.Profile),
       },
     ],

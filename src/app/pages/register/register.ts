@@ -11,6 +11,7 @@ import { FormErrors } from '@components/form-errors';
 import { registerSchema } from './register-schema';
 import { Store } from '@ngrx/store';
 import { authActions } from '@app/shared/store/auth/auth-actions';
+import { ROUTES } from '@app/enums/router';
 
 @Component({
   selector: 'app-register',
@@ -22,6 +23,7 @@ import { authActions } from '@app/shared/store/auth/auth-actions';
 })
 export class Register {
   private readonly store = inject(Store);
+  readonly ROUTES = ROUTES;
 
   // Form model with initial values
   // React: const [formData, setFormData] = useState({ username: '', email: '', password: '', confirmPassword: '' })

@@ -12,6 +12,7 @@ import { authActions } from '@app/shared/store/auth/auth-actions';
 import { catchError, EMPTY, map, of, switchMap } from 'rxjs';
 import { NgToastService } from 'ng-angular-popup';
 import { Storage } from '@services/storage';
+import { ROUTES } from '@app/enums/router';
 
 // createEffect: Listens to actions and performs side effects
 // React equivalent with Redux Toolkit:
@@ -53,7 +54,7 @@ export const loginEffect = createEffect(
             // Navigate to products page
             // React: Usually done in component with useEffect watching token
 
-            router.navigateByUrl('/products');
+            router.navigateByUrl(ROUTES.HOME);
             toast.success('Login successful', 'SUCCESS');
             storage.set('token', response.token);
 
@@ -96,7 +97,7 @@ export const registerEffect = createEffect(
         return authApi.register(registerRequest).pipe(
           map(() => {
             // Navigate to login after successful registration
-            router.navigateByUrl('/login');
+            router.navigateByUrl(ROUTES.LOGIN);
             toast.success('Login successful', 'SUCCESS');
             return authActions.registerSuccess();
           }),
@@ -154,7 +155,7 @@ export const logoutEffect = createEffect(
       ofType(authActions.logout),
       map(() => {
         storage.remove('token');
-        router.navigateByUrl('/login');
+        router.navigateByUrl(ROUTES.LOGIN);
         return { type: 'NO_ACTION' };
       }),
     );

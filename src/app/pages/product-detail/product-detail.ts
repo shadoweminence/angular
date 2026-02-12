@@ -11,6 +11,7 @@ import { selectProducts, productFeatures } from '@store/product/productFeatures'
 import { productActions } from '@store/product/productActions';
 import { ButtonModule } from 'primeng/button';
 import { SkeletonModule } from 'primeng/skeleton';
+import { ROUTES } from '@app/enums/router';
 
 @Component({
   selector: 'app-product-detail',
@@ -20,6 +21,7 @@ import { SkeletonModule } from 'primeng/skeleton';
 export class ProductDetail implements OnInit {
   private readonly store = inject(Store);
   private readonly route = inject(ActivatedRoute);
+  readonly ROUTES = ROUTES;
 
   // Get all products from store
   private allProducts = this.store.selectSignal(selectProducts);

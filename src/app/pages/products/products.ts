@@ -12,14 +12,17 @@ import { RouterLink } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { productActions } from '@store/product/productActions';
 import { productFeatures, selectProducts } from '@store/product/productFeatures';
+import { ROUTES } from '@app/enums/router';
 
 @Component({
   selector: 'app-products',
+  standalone: true,
   imports: [DataViewModule, SkeletonModule, ButtonModule, RouterLink],
   templateUrl: './products.html',
 })
 export class Products implements OnInit {
   private readonly store = inject(Store);
+  readonly ROUTES = ROUTES;
 
   // Select all products from store
   // React: const allProducts = useSelector(selectProducts)

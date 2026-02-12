@@ -39,7 +39,7 @@
       <p class="text-center text-sm text-gray-600 mt-4">
         Don't have an account?
         <!-- routerLink: Navigation, React: <Link to="/register"> -->
-        <a routerLink="/register" class="text-blue-500 hover:underline">Register</a>
+        <a [routerLink]="['/', ROUTES.REGISTER]" class="text-blue-500 hover:underline">Register</a>
       </p>
     </form>
   </div>

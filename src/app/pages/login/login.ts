@@ -12,6 +12,7 @@ import { FormErrors } from '@components/form-errors';
 import { Store } from '@ngrx/store';
 import { authActions } from '@app/shared/store/auth/auth-actions';
 import { PASSWORD_MIN_LENGTH, VALIDATION_MESSAGES } from '@shared/constants/validation.constants';
+import { ROUTES } from '@app/enums/router';
 
 @Component({
   selector: 'app-login',
@@ -23,6 +24,7 @@ import { PASSWORD_MIN_LENGTH, VALIDATION_MESSAGES } from '@shared/constants/vali
 })
 export class Login {
   private readonly store = inject(Store);
+  readonly ROUTES = ROUTES;
 
   // Form model with initial values
   // React: const [formData, setFormData] = useState({ username: '', password: '' })

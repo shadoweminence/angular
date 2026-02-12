@@ -23,7 +23,7 @@ export const guestGuard: CanActivateFn = () => {
   return store.select(selectIsLoggedIn).pipe(
     map((isLoggedIn) => {
       if (!isLoggedIn) return true; // Allow access for guests
-      return router.parseUrl('/products'); // Redirect logged-in users
+      return router.parseUrl('/'); // Redirect logged-in users
     }),
   );
 };

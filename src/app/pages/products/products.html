@@ -26,7 +26,10 @@
           }
         } @else {
           @for (item of items; track item.id) {
-            <div class="col-span-12 sm:col-span-6 xl:col-span-4 p-2">
+            <div
+              class="col-span-12 sm:col-span-6 xl:col-span-4 p-2 cursor-pointer"
+              [routerLink]="['/', ROUTES.PRODUCT_DETAIL, item.id]"
+            >
               <div
                 class="p-6 border border-surface-200 dark:border-surface-700 bg-surface-0 dark:bg-surface-900 rounded flex flex-col h-full"
               >
@@ -53,7 +56,6 @@
                     {{ '$' + item.price }}
                   </span>
                   <button
-                    [routerLink]="['/products', item.id]"
                     pButton
                     icon="pi pi-shopping-cart"
                     class="p-button-rounded"
