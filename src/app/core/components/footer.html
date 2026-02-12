@@ -8,9 +8,17 @@
       <div>
         <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
         <ul class="space-y-2 text-sm">
-          <li><a href="#" class="text-gray-400 hover:text-white">Products</a></li>
-          <li><a href="#" class="text-gray-400 hover:text-white">Cart</a></li>
-          <li><a href="#" class="text-gray-400 hover:text-white">Profile</a></li>
+          <li>
+            <a [routerLink]="[ROUTES.HOME]" class="text-gray-400 hover:text-white">Products</a>
+          </li>
+          <li>
+            <a [routerLink]="['/', ROUTES.CART]" class="text-gray-400 hover:text-white">Cart</a>
+          </li>
+          <li>
+            <a [routerLink]="['/', ROUTES.PROFILE]" class="text-gray-400 hover:text-white"
+              >Profile</a
+            >
+          </li>
         </ul>
       </div>
       <div>

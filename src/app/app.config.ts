@@ -25,6 +25,8 @@ import { productFeatures } from '@store/product/productFeatures';
 import { productEffect, productByIdEffect } from '@store/product/productEffect';
 import { cartFeatures } from './shared/store/cart/cartFeatures';
 import { addCartEffect, cartEffect } from './shared/store/cart/cartEffect';
+import { profileFeatures } from './shared/store/profile/profileFeatures';
+import { profileEffect } from './shared/store/profile/profileEffects';
 
 // ApplicationConfig: Central configuration for the entire Angular app
 // React equivalent: Wrapping App component with providers in index.js/App.js
@@ -49,6 +51,7 @@ export const appConfig: ApplicationConfig = {
       [authFeatures.name]: authFeatures.reducer,
       [productFeatures.name]: productFeatures.reducer,
       [cartFeatures.name]: cartFeatures.reducer,
+      [profileFeatures.name]: profileFeatures.reducer,
     }),
 
     // Side effects middleware for async operations (like API calls)
@@ -63,6 +66,7 @@ export const appConfig: ApplicationConfig = {
       productByIdEffect,
       cartEffect,
       addCartEffect,
+      profileEffect,
     }),
 
     // ========================================================================

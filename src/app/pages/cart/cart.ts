@@ -24,7 +24,6 @@ export class Cart implements OnInit {
   isLoading = this.store.selectSignal(cartFeatures.selectIsLoading);
 
   ngOnInit(): void {
-    console.log(this.allCarts());
     this.store.dispatch(cartActions.getCarts());
   }
 

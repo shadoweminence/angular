@@ -1,1 +1,22 @@
-<h1>Profile Page</h1>
+<div class="container mx-auto py-10">
+  <h1 class="text-2xl font-bold mb-6 flex justify-center">Profile Page</h1>
+
+  @if (isLoading()) {
+    <div class="">
+      <div class="flex justify-center mx-auto">
+        <p-skeleton height="10rem" width="10rem" class="rounded-full mx-auto" />
+      </div>
+
+      <div class="flex justify-center mt-4 font-semibold">
+        <p-skeleton width="8rem" height="1.5rem" />
+      </div>
+    </div>
+  } @else if (profile()) {
+    <img
+      src="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png"
+      alt="profle-image"
+      class="mx-auto"
+    />
+    <div class="flex justify-center mt-4 font-semibold">@{{ profile()?.username ?? '' }}</div>
+  }
+</div>
