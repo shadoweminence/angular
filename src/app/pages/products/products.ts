@@ -13,6 +13,7 @@ import { Store } from '@ngrx/store';
 import { productActions } from '@store/product/productActions';
 import { productFeatures, selectProducts } from '@store/product/productFeatures';
 import { ROUTES } from '@app/enums/router';
+import { profileActions } from '@app/shared/store/profile/profileActions';
 
 @Component({
   selector: 'app-products',
@@ -69,6 +70,7 @@ export class Products implements OnInit {
   // React: useEffect(() => { dispatch(loadProducts()) }, [])
   ngOnInit(): void {
     this.store.dispatch(productActions.loadProducts());
+    this.store.dispatch(profileActions.getProfile({ id: 1 }));
   }
 
   // Helper function to create array for skeleton loaders

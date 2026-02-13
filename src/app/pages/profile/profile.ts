@@ -19,6 +19,8 @@ export class Profile implements OnInit {
   profile = computed(() => this.selectedProfile());
 
   ngOnInit(): void {
-    this.store.dispatch(profileActions.getProfile({ id: 1 }));
+    if (this.profile() == null) {
+      this.store.dispatch(profileActions.getProfile({ id: 1 }));
+    }
   }
 }
