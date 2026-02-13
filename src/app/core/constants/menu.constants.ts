@@ -1,4 +1,5 @@
 import { MenuItem } from 'primeng/api';
+import { ROUTES } from '@app/enums/router';
 
 export const PRODUCTS_MENU_ITEMS: MenuItem[] = [
   {
@@ -15,6 +16,7 @@ export const USER_MENU_ITEMS = (onLogout: () => void): MenuItem[] => [
   {
     label: 'Profile',
     icon: 'pi pi-fw pi-user',
+    routerLink: ['/', ROUTES.PROFILE],
   },
   {
     label: 'Settings',

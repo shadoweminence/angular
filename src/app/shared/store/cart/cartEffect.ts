@@ -3,6 +3,7 @@ import { CartApi } from '@app/shared/services/cartApi';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, map, of, switchMap } from 'rxjs';
 import { cartActions } from './cartActions';
+import { NgToastService } from 'ng-angular-popup';
 
 export const cartEffect = createEffect(
   (actions$ = inject(Actions), cartApi = inject(CartApi)) => {
@@ -35,12 +36,13 @@ export const cartEffect = createEffect(
 );
 
 export const addCartEffect = createEffect(
-  (actions$ = inject(Actions), cartApi = inject(CartApi)) => {
+  (actions$ = inject(Actions), cartApi = inject(CartApi), toast = inject(NgToastService)) => {
     return actions$.pipe(
       ofType(cartActions.addCart),
       switchMap(({ request }) => {
         return cartApi.addCart(request).pipe(
           map((cart) => {
+            toast.success('Product added to cart', 'SUCCESS');
             return cartActions.addCartSuccess({ cart });
           }),
           catchError((error) => of(cartActions.addCartFailure({ error: error.message }))),
